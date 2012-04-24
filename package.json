@@ -1,0 +1,22 @@
+{
+    "name": "make-sync"
+  , "version": "0.0.1"
+  , "description": "synchronize functions and objects using fibers"
+  , "keywords": ["fibers", "sync", "synchronous"]
+  , "author": "Seb Vincent <seb.vincent@gmail.com>"
+  , "repository": { "type": "git", "url": "git@github.com:sebv/node-make-sync.git" }
+  , "main": "./index"
+  , "engine": "node >= 0.6.1"
+  , "scripts": {
+    "test": "cake test"
+  }
+  , "dependencies": {
+    "fibers": "latest",
+    "underscore": "latest"
+  }
+  , "devDependencies" : {
+      "coffee-script" : "latest"
+    , "mocha" : "latest"
+    , "should": "latest"
+  }
+}
