@@ -1,4 +1,5 @@
-# node-make-sync
+# make-sync
+
 
 This module uses  [node-fibers](http://github.com/laverdet/node-fibers) to transform asynchronous functions into 
 synchronous ones. The asynchronous function must have a 'done' callback as the last arg, and 
@@ -18,18 +19,21 @@ further down):
    - async
    - mixed-args (default 'mixed')
    - mixed-fibers
-   
+
+
 ## install
+
 ```
-npm install node-make-sync
+npm install make-sync
 ```
+
 
 ## usage (coffeescript)
 
 ### simple example
 
 ```coffeescript
-{Sync, MakeSync} = require 'node-make-sync'
+{Sync, MakeSync} = require 'make-sync'
 
 f = (a,b,done) ->
   res = a+b
@@ -57,38 +61,49 @@ Sync ->
   console.log "obj sync ->", res   
 ```
 
+
 ## modes
 
 ### sync (default)
+
 ```coffeescript
 f = MakeSync f
 # or
-f = MakeSync f, {mode:'sync'}
+f = MakeSync f, mode:'sync'
 ```
+
 This mode assumes that the function is always called in sync mode within a 
 fiber, so that the 'done' callback is never there. (ie if there is a function
 at the end it will assume this is a function argument and add it own callback)
 
+
 ### async
+
 ```coffeescript
-f = MakeSync f, {mode:'async'}
+f = MakeSync f, mode:'async'
 ```
+
 This mode assumes that the function is always called in asynchronous mode, 
 so doesn't change the function behaviour. (probably not useful in most case)  
 
+
 ### mixed-args (default mixed)
+
 ```coffeescript
-f = MakeSync f, {mode:'mixed'}
+f = MakeSync f, mode:'mixed'
 # or
-f = MakeSync f, {mode:['mixed', 'args']}
+f = MakeSync f, mode:['mixed', 'args']
 ```
+
 This mode uses the function arguments to determine wether it needs
 to be called synchronously or asynchronously. When the last 
 argument is a function, MakeSync assume the last argument is the 'done' callback. 
 There may be some issues when using other function arguments. Please refer 
 to the section below.
 
+
 #### fixed numbers of args /  function arguments
+
 This only applies when using the mixed-args mode and calling the function sychronously.
 
 There are 2 strategies to resolve the confusion between the 'done' callback and other
@@ -98,7 +113,7 @@ function argument, when those are passed at the end of the argument list:
 * pass the number of arguments expected (excluding the callback) to MakeSync.
 
 ```coffeescript
-{Sync, MakeSync} = require 'node-make-sync'
+{Sync, MakeSync} = require 'make-sync'
 
 f = (a,b, _g, done) ->
   res = a + b + _g()
@@ -107,27 +122,30 @@ f = (a,b, _g, done) ->
 g = -> 10
 
 # synchronizing (not using a fixed number of arg)  
-f1 = MakeSync f, {mode:['mixed', 'args']}
+f1 = MakeSync f, mode:['mixed', 'args']
 
 Sync ->
   try f1 1, 2, g catch error 
     console.log "f1 throws" # thinks that g is the callback
 
   res = f1 1, 2, g, undefined # ok when passing undefined at the end 
-  console.log "sync ->", res 
+  console.log "f1 sync ->", res 
 
 # passing a fixed number of args 
 f2 = MakeSync f, {mode:['mixed','args'], num_of_args: 3}
 
 Sync ->
   res = f2 1, 2, g # it works 
-  console.log "sync ->", res 
+  console.log "f2 sync ->", res 
 ```
 
+
 ### mixed-fibers
+
 ```coffeescript
-f = MakeSync f, {mode: ['mixed','fibers']}
+f = MakeSync f, mode:['mixed','fibers']
 ```
+
 When using this mode, MakeSync checks wether a fiber is currently available,
 using 'Fiber.current', and uses the sync or async mode accordingly.
 
@@ -138,7 +156,7 @@ pass inclusion and exclusion lists, to specify num_of_args on a per function bas
 and the MakeSync mode globally.
 
 ```coffeescript
-{Sync, MakeSync} = require 'node-make-sync'
+{Sync, MakeSync} = require 'make-sync'
 
 class Obj
   f1: (done) -> done null, 1,
