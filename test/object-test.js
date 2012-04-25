@@ -18,13 +18,26 @@
   describe("object", function() {
     var buildAsyncFuncCall, buildObj, buildOptions, buildSyncFuncCall;
     buildObj = function() {
-      var funcStart, i, obj, _i, _j, _len, _ref2;
-      obj = {};
+      var funcStart, i, obj, _fn, _i, _j, _len, _ref2;
+      obj = {
+        abc: 15
+      };
       _ref2 = ['f', 'g', '_f'];
       for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
         funcStart = _ref2[_i];
+        _fn = function() {
+          var f;
+          f = makeTestFunc(i, i % 2 === 0, i >= 2);
+          return obj["" + funcStart + i] = function() {
+            var args, b, res;
+            args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+            b = this.abc.def;
+            res = f.apply(null, args);
+            return res;
+          };
+        };
         for (i = _j = 0; 0 <= MAX_PARAM ? _j <= MAX_PARAM : _j >= MAX_PARAM; i = 0 <= MAX_PARAM ? ++_j : --_j) {
-          obj["" + funcStart + i] = makeTestFunc(i, i % 2 === 0, i >= 2);
+          _fn();
         }
       }
       return obj;

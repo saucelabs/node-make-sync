@@ -9,10 +9,17 @@ doneError = /is not a function/
 
 describe "object", ->
   buildObj = ->
-    obj = {}
+    obj = {abc:15}
     for funcStart in ['f','g','_f']
-      for i in [0..MAX_PARAM]      
-        obj["#{funcStart}#{i}"] = makeTestFunc i, i%2 is 0, i>=2
+      for i in [0..MAX_PARAM] 
+        do ->
+          f = makeTestFunc i, i%2 is 0, i>=2
+          # doing something a bit complicate to be able
+          # to catch context errors
+          obj["#{funcStart}#{i}"] = (args...) ->
+            b = @abc.def # will crash if context got lost 
+            res =  f(args...)
+            return res;
     obj
 
   buildAsyncFuncCall = (funcName, i, obj) ->

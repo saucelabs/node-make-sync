@@ -13,9 +13,11 @@ wait = Future.wait
 _callSync = (f, args...) ->   
   # fixing callback when there is no error arg
   fWithErr = (callback) ->
-    f args..., (err, res) ->
-      [err,res] = [null,err] unless res?
-      callback err,res
+    f.apply this, [ 
+      args..., (err, res) ->
+        [err,res] = [null,err] unless res?
+        callback err,res
+      ]
   wrappedf = Future.wrap fWithErr
   res = wrappedf.apply this
   wait(res)
@@ -52,7 +54,7 @@ makeFuncSync = (f, options, key) ->
               ['sync',args]
 
   (args...) ->
-    [callMode,args] = prepareCall args...
+    [callMode,args] = prepareCall args...    
     switch callMode
       when 'sync' then _callSync.apply this, [f, args...]
       when 'async' then f.apply this, [args...]
