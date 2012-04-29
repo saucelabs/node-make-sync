@@ -149,6 +149,47 @@ f = MakeSync f, mode:['mixed','fibers']
 When using this mode, MakeSync checks wether a fiber is currently available,
 using 'Fiber.current', and uses the sync or async mode accordingly.
 
+## error handling in sync mode
+
+This can be configured using the error_type options
+
+### default
+
+When error_type is not specified, the best possible result is returned to the caller.
+However, if there is an exception, it will be returned as the result. For instance:
+* callback('hello')   -->   res='hello'
+* callback(null,'hello')   -->   res='hello'
+* callback(error)   -->   res=error
+
+### error in callback
+```coffeescript
+syncF = MakeSync f, {error_type: 'callback'}
+```
+This is the best case, to use when the function is always calling the callback as the following:
+```coffeescript
+done err, res
+```
+In this case the the error is thrown if defined or the result is returned.  
+
+### none
+```coffeescript
+syncF = MakeSync f, {error_type: 'none'}
+```
+Use this configuration when it is sure that the function is always calling the callback as the following:
+```coffeescript
+done res
+```
+In this case, no exception is thrown by MakeSync, and the result is returned whith no modification.
+
+
+## sync mode results 
+
+No matter what error_type mode is used the results will be returned as the following:
+* if there is no result, 'undefined' is returned
+* if there is one result, it is returned (not using array wrap)
+* if there are more than one results, they are wrapped within an array
+
+
 ## options when calling on objects  
 By default, when calling MakeSync on an object,  MakeSync is called on all its 
 functions and no num_of_args argument is passed. However, it is possible to 
