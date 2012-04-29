@@ -125,6 +125,16 @@
         return done();
       });
     });
+    describe("errorType", function() {
+      return it("function mode", function(done) {
+        var options;
+        options = new Options({
+          error_type: 'callback'
+        });
+        options.errorType().should.equal('callback');
+        return done();
+      });
+    });
     return describe("mode", function() {
       var test;
       test = function(mode, expected, label) {

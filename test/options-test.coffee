@@ -108,6 +108,14 @@ describe "options", ->
       should.not.exist options.numOfParams 'g'
       done()
 
+  describe "errorType", ->
+    it "function mode", (done) ->
+      options = new Options \
+      { 
+        error_type: 'callback'
+      }        
+      options.errorType().should.equal 'callback'    
+      done()
 
   describe "mode", ->
     test = (mode,expected, label) ->

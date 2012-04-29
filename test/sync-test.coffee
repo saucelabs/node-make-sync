@@ -10,7 +10,7 @@ describe "sync", ->
       it "should work with #{i} args", (done) ->
         args = [1..10][0...i]
         f = makeTestFunc i, true, false
-        syncF = MakeSync f    
+        syncF = MakeSync f, {error_type: 'callback'}    
         Sync ->
           res = syncF args...          
           res.should.equal RES_WITHOUT_EXTRA_FUNC[i]
@@ -23,7 +23,7 @@ describe "sync", ->
       it "should work with #{i} args", (done) ->
         args = [1..10][0...i]
         f = makeTestFunc i, false, false
-        syncF = MakeSync f    
+        syncF = MakeSync f, {error_type: 'none'}
         Sync ->
           res = syncF args...          
           res.should.equal RES_WITHOUT_EXTRA_FUNC[i]
@@ -36,7 +36,7 @@ describe "sync", ->
       it "should work with #{i} args", (done) ->
         args = [1..10][0...i]
         f = makeTestFunc i, true, true
-        syncF = MakeSync f   
+        syncF = MakeSync f, {error_type: 'callback'}
         Sync ->
           res = syncF args..., extraFunc, undefined          
           res.should.equal RES_WITH_EXTRA_FUNC[i]
@@ -49,7 +49,7 @@ describe "sync", ->
       it "should work with #{i} args", (done) ->
         args = [1..10][0...i]
         f = makeTestFunc i, false, true
-        syncF = MakeSync f   
+        syncF = MakeSync f, {error_type: 'none'}
         Sync ->
           res = syncF args..., extraFunc, undefined          
           res.should.equal RES_WITH_EXTRA_FUNC[i]

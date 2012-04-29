@@ -19,6 +19,7 @@
 # include: ['f', 'g']
 # num_of_args:
 #   f: 2
+#   error_type: 'callback'
 # }
 #
 # { exclude: 'f' }
@@ -59,5 +60,7 @@ class Options
        mode in ['args','fibers'] ) or 'args'] 
     secondary = [] if primary in ['sync','async']
     [primary].concat secondary
-    
+
+  errorType: -> @_options.error_type
+      
 exports.Options = Options

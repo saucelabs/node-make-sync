@@ -17,7 +17,9 @@
           var args, f, syncF;
           args = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].slice(0, i);
           f = makeTestFunc(i, true, false);
-          syncF = MakeSync(f);
+          syncF = MakeSync(f, {
+            error_type: 'callback'
+          });
           return Sync(function() {
             var res;
             res = syncF.apply(null, args);
@@ -39,7 +41,9 @@
           var args, f, syncF;
           args = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].slice(0, i);
           f = makeTestFunc(i, false, false);
-          syncF = MakeSync(f);
+          syncF = MakeSync(f, {
+            error_type: 'none'
+          });
           return Sync(function() {
             var res;
             res = syncF.apply(null, args);
@@ -61,7 +65,9 @@
           var args, f, syncF;
           args = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].slice(0, i);
           f = makeTestFunc(i, true, true);
-          syncF = MakeSync(f);
+          syncF = MakeSync(f, {
+            error_type: 'callback'
+          });
           return Sync(function() {
             var res;
             res = syncF.apply(null, __slice.call(args).concat([extraFunc], [void 0]));
@@ -83,7 +89,9 @@
           var args, f, syncF;
           args = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].slice(0, i);
           f = makeTestFunc(i, false, true);
-          syncF = MakeSync(f);
+          syncF = MakeSync(f, {
+            error_type: 'none'
+          });
           return Sync(function() {
             var res;
             res = syncF.apply(null, __slice.call(args).concat([extraFunc], [void 0]));
