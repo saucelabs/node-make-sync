@@ -2,8 +2,8 @@
 
 
 This module uses  [node-fibers](http://github.com/laverdet/node-fibers) to transform asynchronous functions into 
-synchronous ones. The asynchronous function must have a 'done' callback as the last arg, and 
-must return result in the form 'done(res)' or 'done(err, res)'
+synchronous ones. This is designed to work with asynchronous functions following the standard ('done' callback 
+as the last arg).
 
 The main commands are:
 
