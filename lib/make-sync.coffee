@@ -72,7 +72,7 @@ makeObjSync = (obj, options) ->
 
 
 # call the approriate makeSync method depending on object type
-makeSync = (target, _options) ->
+makeSync = (target, _options) -> 
   options = new Options(_options)
   switch typeof target
     when 'function' then makeFuncSync target, options

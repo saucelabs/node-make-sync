@@ -15,8 +15,9 @@
     , "fibers": "latest"
     , "underscore": "latest"
   }
-  , "devDependencies" : {
-    "mocha" : "latest"
+  , "devDependencies" : {    
+    "sv-cake-utils" : "latest"
+    , "mocha" : "latest"
     , "should": "latest"
   }
 }
