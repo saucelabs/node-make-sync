@@ -149,52 +149,60 @@ f = MakeSync f, mode:['mixed','fibers']
 When using this mode, MakeSync checks wether a fiber is currently available,
 using 'Fiber.current', and uses the sync or async mode accordingly.
 
-## error handling in sync mode
+## return and error handling in sync mode
 
-This can be configured using the error_type options
+This can be configured using the sync-return option. 
 
 ### default
 
-When error_type is not specified, the best possible result is returned to the caller.
-However, if there is an exception, it will be returned as the result. For instance:
-* callback('hello')   -->   res='hello'
-* callback(null,'hello')   -->   res='hello'
-* callback(error)   -->   res=error
+If not specified, this options is defaulted to:
 
-### error in callback
 ```coffeescript
-syncF = MakeSync f, {error_type: 'callback'}
+{'sync-return': 'err,res'}
 ```
-This is the best case, to use when the function is always calling the callback as the following:
+
+This means that MakeSync expect the function to pass an error, and one result to the callback. 
+It will ignore everything else.
+
+
+### matchers
+
+An argument matcher can be passed like the following: 
+
 ```coffeescript
-done err, res
+'sync-return': 'err,res'
+'sync-return': 'res'
+'sync-return': 'err,res1,res2'
+'sync-return': 'res1,res2'
+'sync-return': 'err,res...'
+'sync-return': 'res...'
 ```
-In this case the the error is thrown if defined or the result is returned.  
 
-### none
+It works like the coffeescript arguments with splats. MakeSync will match the arguments passed
+to the callback using this pattern. If err is defined it will throw it, otherwise res will be
+returned. (When using splats on res, res becomes an array)
+
+
+### function
+
+If matchers are not sufficient, you may use a function instead. This function will receive the same arguments
+as the callback, and its return will be the final result returned.
+
 ```coffeescript
-syncF = MakeSync f, {error_type: 'none'}
+'sync-return': (err,res1,res2) -> res1 + res2
 ```
-Use this configuration when it is sure that the function is always calling the callback as the following:
-```coffeescript
-done res
-```
-In this case, no exception is thrown by MakeSync, and the result is returned whith no modification.
 
+## options when calling on objects
 
-## sync mode results 
+When calling MakeSync on an object,  MakeSync is called on all its 
+methods. 
 
-No matter what error_type mode is used the results will be returned as the following:
-* if there is no result, 'undefined' is returned
-* if there is one result, it is returned (not using array wrap)
-* if there are more than one results, they are wrapped within an array
+It is possible to configure the following: 
 
-
-## options when calling on objects  
-By default, when calling MakeSync on an object,  MakeSync is called on all its 
-functions and no num_of_args argument is passed. However, it is possible to 
-pass inclusion and exclusion lists, to specify num_of_args on a per function basis
-and the MakeSync mode globally.
+* inclusion and exclusion lists (per method basis)
+* num_of_args (per method basis)
+* sync-return (per method basis)
+* MakeSync mode (globally)
 
 ```coffeescript
 {Sync, MakeSync} = require 'make-sync'
