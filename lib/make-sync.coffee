@@ -9,8 +9,7 @@ Future = require 'fibers/future'
 wait = Future.wait
 {Options} = require '../lib/options'
 
-
-_callSync = (f, options , args...) ->   
+callSync = (f, resultBuilderFunc, args...) ->   
   # making sure the returns follow the
   # usual callback rule
   fWithErr = (callback) ->
@@ -19,26 +18,11 @@ _callSync = (f, options , args...) ->
         callback null,res
       ]
   wrappedf = Future.wrap fWithErr
-  res = wrappedf.apply this
-  wait(res)
-  res = res.get()
-  switch options?.errorType()
-    when 'callback'
-      err = res[0]
-      res = res[1..]
-    when 'none'
-      # nothing to do
-    else
-      # returns res or [err, res...]. Works well when there is no error,
-      # otherwise the client will have to deal with the error.
-      if res.length > 1
-        res = res[1..] if not res[0]?
-  if err? then throw new Error err
-  switch res.length
-     when 0 then return undefined
-     when 1 then return res[0]
-     else return res 
-  
+  rawRes = wrappedf.apply this
+  wait(rawRes)
+  rawRes = rawRes.get()
+  resultBuilderFunc.apply @, rawRes
+      
 # return a function wich:
 #   - uses fibers when the done callback is not detected.
 #   - otherwise calls the original function
@@ -68,11 +52,14 @@ makeFuncSync = (f, options, key) ->
               ['async',args.concat [done]]
             else
               ['sync',args]
-
+  
+  resultBuilderFunc = options.syncReturn( key )
+  
   (args...) ->
     [callMode,args] = prepareCall args...    
     switch callMode
-      when 'sync' then _callSync.apply this, [f, options, args...]
+      when 'sync'         
+        callSync.apply this, [f, resultBuilderFunc, args...]
       when 'async' then f.apply this, [args...]
 
 # apply makesync on all the object functions

@@ -11,12 +11,12 @@
     "test": "cake test"
   }
   , "dependencies": {
-    "fibers": "latest",
-    "underscore": "latest"
+    "coffee-script" : "latest"
+    , "fibers": "latest"
+    , "underscore": "latest"
   }
   , "devDependencies" : {
-      "coffee-script" : "latest"
-    , "mocha" : "latest"
+    "mocha" : "latest"
     , "should": "latest"
   }
 }

@@ -9,7 +9,7 @@
 
   _ref1 = require('./helpers/function-gen'), makeTestFunc = _ref1.makeTestFunc, extraFunc = _ref1.extraFunc, MAX_PARAM = _ref1.MAX_PARAM, RES_WITHOUT_EXTRA_FUNC = _ref1.RES_WITHOUT_EXTRA_FUNC, RES_WITH_EXTRA_FUNC = _ref1.RES_WITH_EXTRA_FUNC;
 
-  describe("async", function() {
+  describe("mixed-args", function() {
     describe("errors, no function arg", function() {
       var i, test, _i, _results;
       test = function(i) {
@@ -45,7 +45,8 @@
           args = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].slice(0, i);
           f = makeTestFunc(i, false, false);
           syncF = MakeSync(f, {
-            mode: ['mixed', 'args']
+            mode: ['mixed', 'args'],
+            'sync-return': 'res'
           });
           syncF.apply(null, __slice.call(args).concat([function(res) {
             return res.should.equal(RES_WITHOUT_EXTRA_FUNC[i]);
@@ -99,7 +100,8 @@
           args = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].slice(0, i);
           f = makeTestFunc(i, false, true);
           syncF = MakeSync(f, {
-            mode: ['mixed', 'args']
+            mode: ['mixed', 'args'],
+            'sync-return': 'res'
           });
           syncF.apply(null, __slice.call(args).concat([extraFunc], [function(res) {
             return res.should.equal(RES_WITH_EXTRA_FUNC[i]);
@@ -155,7 +157,8 @@
           f = makeTestFunc(i, false, true);
           syncF = MakeSync(f, {
             mode: ['mixed', 'args'],
-            num_of_args: i + 1
+            num_of_args: i + 1,
+            'sync-return': 'res'
           });
           syncF.apply(null, __slice.call(args).concat([extraFunc], [function(res) {
             return res.should.equal(RES_WITH_EXTRA_FUNC[i]);

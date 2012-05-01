@@ -52,14 +52,23 @@ describe "object", ->
   buildOptions = (mode) ->
     options =
       mode: mode
-      exclude: ['g0','g1',/^_/]      
+      exclude: ['g0','g1',/^_/]
+      'sync-return': {}          
     if _.isEqual mode, ['mixed','args'] 
       options.num_of_args = 
         g2: 3
         g3: 4
+        
+        use: (err, res) ->
+          res = err if not res?
+          res
+    
+    for funcStart in ['f','g','_f']
+      for i in [0..MAX_PARAM] 
+        if(i%2 is 1)
+          options['sync-return']["#{funcStart}#{i}"]='res'
     options   
     
-
   describe "mode=sync", ->
     [options,obj] = []
     before (done) ->

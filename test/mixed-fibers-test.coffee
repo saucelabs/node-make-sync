@@ -3,7 +3,7 @@ should = require 'should'
 {makeTestFunc, extraFunc, MAX_PARAM, RES_WITHOUT_EXTRA_FUNC, 
   RES_WITH_EXTRA_FUNC} = require './helpers/function-gen'
 
-describe "async", ->
+describe "mixed-fibers", ->
   describe "errors, no function arg", ->
     test = (i) ->
       it "should work with #{i} args", (done) ->
@@ -24,7 +24,8 @@ describe "async", ->
       it "should work with #{i} args", (done) ->
         args = [1..10][0...i]
         f = makeTestFunc i, false, false
-        syncF = MakeSync f, {mode:['mixed','fibers']}    
+        syncF = MakeSync f, 
+          {mode:['mixed','fibers'], 'sync-return':'res'}    
         syncF args..., (res) ->          
           res.should.equal RES_WITHOUT_EXTRA_FUNC[i]
         Sync ->
@@ -54,7 +55,8 @@ describe "async", ->
       it "should work with #{i} args", (done) ->
         args = [1..10][0...i]
         f = makeTestFunc i, false, true
-        syncF = MakeSync f, {mode:['mixed','fibers']}
+        syncF = MakeSync f, 
+          {mode:['mixed','fibers'], 'sync-return': 'res'}
         syncF args..., extraFunc, (res) ->          
           res.should.equal RES_WITH_EXTRA_FUNC[i]
         Sync ->

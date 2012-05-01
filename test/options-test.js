@@ -125,13 +125,96 @@
         return done();
       });
     });
-    describe("errorType", function() {
-      return it("function mode", function(done) {
+    describe("syncReturn", function() {
+      it("default", function(done) {
+        var options;
+        options = new Options({});
+        options.syncReturn().should.be.a('function');
+        (options.syncReturn()(null, 1)).should.equal(1);
+        (options.syncReturn()(null, 1, 3)).should.equal(1);
+        (function() {
+          return options.syncReturn()('Shit!');
+        }).should["throw"](/Shit/);
+        return done();
+      });
+      it("pattern with error", function(done) {
         var options;
         options = new Options({
-          error_type: 'callback'
+          'sync-return': 'err,res...'
         });
-        options.errorType().should.equal('callback');
+        options.syncReturn().should.be.a('function');
+        (options.syncReturn()(null, 1)).should.eql([1]);
+        (options.syncReturn()(null, 1, 3)).should.eql([1, 3]);
+        (function() {
+          return options.syncReturn()('Shit!');
+        }).should["throw"](/Shit/);
+        return done();
+      });
+      it("pattern without error", function(done) {
+        var options;
+        options = new Options({
+          'sync-return': 'res'
+        });
+        options.syncReturn().should.be.a('function');
+        (options.syncReturn()(1)).should.equal(1);
+        (options.syncReturn()(1, 3)).should.equal(1);
+        (options.syncReturn()('Shit!')).should.equal('Shit!');
+        return done();
+      });
+      it("function", function(done) {
+        var options;
+        options = new Options({
+          'sync-return': function(err, res1, res2) {
+            if (err) {
+              throw new Error('Merde!');
+            }
+            return res1 + res2;
+          }
+        });
+        options.syncReturn().should.be.a('function');
+        (options.syncReturn()(null, 1, 3)).should.equal(4);
+        (function() {
+          return options.syncReturn()('Shit!');
+        }).should["throw"](/Merde/);
+        return done();
+      });
+      it("object global config with function", function(done) {
+        var options;
+        options = new Options({
+          'sync-return': function() {
+            return 41;
+          }
+        });
+        options.syncReturn('h').should.be.a('function');
+        (options.syncReturn('h')(2, 3)).should.equal(41);
+        return done();
+      });
+      it("object global config with pattern", function(done) {
+        var options;
+        options = new Options({
+          'sync-return': 'res'
+        });
+        options.syncReturn('h').should.be.a('function');
+        (options.syncReturn('h')(2, 3)).should.equal(2);
+        return done();
+      });
+      return it("object per function config", function(done) {
+        var options;
+        options = new Options({
+          'sync-return': {
+            '*': 'err,res',
+            g: 'res',
+            h: function() {
+              return 41;
+            }
+          }
+        });
+        options.syncReturn('f').should.be.a('function');
+        (options.syncReturn('f')(null, 1)).should.equal(1);
+        options.syncReturn('g').should.be.a('function');
+        (options.syncReturn('g')(2, 3)).should.equal(2);
+        options.syncReturn('h').should.be.a('function');
+        (options.syncReturn('h')(2, 3)).should.equal(41);
         return done();
       });
     });

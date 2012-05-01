@@ -19,7 +19,14 @@
 # include: ['f', 'g']
 # num_of_args:
 #   f: 2
-#   error_type: 'callback'
+#
+# sync-return:
+#   '*': [err,res]
+#   f: (rawArgs) ->
+#     ...
+#     res
+#
+# 
 # }
 #
 # { exclude: 'f' }
@@ -28,6 +35,7 @@
 ###
 
 _ = require "underscore"
+CoffeeScript = require 'coffee-script'      
 
 class Options
       
@@ -61,6 +69,35 @@ class Options
     secondary = [] if primary in ['sync','async']
     [primary].concat secondary
 
-  errorType: -> @_options.error_type
-      
+  syncReturn: (target) -> 
+    res = 'err,res'
+    if(target?)
+      # object options    
+      if (typeof @_options?['sync-return']) is 'object'        
+        for rule,builder of @_options?['sync-return']        
+          rule = /.*/ if rule is '*'
+          rule = ///^#{rule}$/// if typeof rule is 'string'
+          if target.match rule
+            res = builder
+      else
+        res = @_options?['sync-return'] or res
+    else
+      res = @_options?['sync-return'] or res      
+    if (typeof res) is 'string'
+      resultBuilderAsString =
+        """
+        resultBuilder = (rawRes...) -> 
+          [err,res] = []
+          [#{res}] = rawRes
+          if err?
+            throw err if err instanceof Error
+            throw new Error err
+          return res    
+        """      
+      # building matcher function             
+      resultBuilderJs = CoffeeScript.compile resultBuilderAsString, bare:'on'
+      eval resultBuilderJs
+      res = resultBuilder      
+    res
+    
 exports.Options = Options

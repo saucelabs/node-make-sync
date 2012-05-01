@@ -3,7 +3,7 @@ should = require 'should'
 {makeTestFunc, extraFunc, MAX_PARAM, RES_WITHOUT_EXTRA_FUNC, 
   RES_WITH_EXTRA_FUNC} = require './helpers/function-gen'
 
-describe "async", ->
+describe "mixed-args", ->
 
   describe "errors, no function arg", ->
     test = (i) ->
@@ -25,7 +25,8 @@ describe "async", ->
       it "should work with #{i} args", (done) ->
         args = [1..10][0...i]
         f = makeTestFunc i, false, false
-        syncF = MakeSync f, {mode:['mixed','args']}    
+        syncF = MakeSync f, 
+          {mode:['mixed','args'], 'sync-return': 'res'}     
         syncF args..., (res) ->          
           res.should.equal RES_WITHOUT_EXTRA_FUNC[i]
         Sync ->
@@ -55,7 +56,8 @@ describe "async", ->
       it "should work with #{i} args", (done) ->
         args = [1..10][0...i]
         f = makeTestFunc i, false, true
-        syncF = MakeSync f, {mode:['mixed','args']}
+        syncF = MakeSync f, 
+          {mode:['mixed','args'], 'sync-return': 'res'}
         syncF args..., extraFunc, (res) ->          
           res.should.equal RES_WITH_EXTRA_FUNC[i]
         Sync ->          
@@ -85,7 +87,8 @@ describe "async", ->
       it "should work with #{i} args", (done) ->
         args = [1..10][0...i]
         f = makeTestFunc i, false, true
-        syncF = MakeSync f, {mode:['mixed','args'], num_of_args:i+1}
+        syncF = MakeSync f, 
+          {mode:['mixed','args'], num_of_args:i+1, 'sync-return': 'res'}
         syncF args..., extraFunc, (res) ->          
           res.should.equal RES_WITH_EXTRA_FUNC[i]
         Sync ->          

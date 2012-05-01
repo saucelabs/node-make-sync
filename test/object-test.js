@@ -85,16 +85,32 @@
       };
     };
     buildOptions = function(mode) {
-      var options;
+      var funcStart, i, options, _i, _j, _len, _ref2;
       options = {
         mode: mode,
-        exclude: ['g0', 'g1', /^_/]
+        exclude: ['g0', 'g1', /^_/],
+        'sync-return': {}
       };
       if (_.isEqual(mode, ['mixed', 'args'])) {
         options.num_of_args = {
           g2: 3,
-          g3: 4
+          g3: 4,
+          use: function(err, res) {
+            if (!(res != null)) {
+              res = err;
+            }
+            return res;
+          }
         };
+      }
+      _ref2 = ['f', 'g', '_f'];
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        funcStart = _ref2[_i];
+        for (i = _j = 0; 0 <= MAX_PARAM ? _j <= MAX_PARAM : _j >= MAX_PARAM; i = 0 <= MAX_PARAM ? ++_j : --_j) {
+          if (i % 2 === 1) {
+            options['sync-return']["" + funcStart + i] = 'res';
+          }
+        }
       }
       return options;
     };
