@@ -153,6 +153,32 @@ using 'Fiber.current', and uses the sync or async mode accordingly.
 
 This can be configured using the sync-return option. 
 
+
+### Argument matcher
+
+Argument matchers works like the coffeescript arguments with splats. MakeSync will match the arguments passed
+to the callback using this pattern. If err is defined it will throw it, otherwise res will be
+returned. (When using splats on res, res becomes an array)
+
+```coffeescript
+'sync-return': 'err,res'
+'sync-return': 'res'
+'sync-return': 'err,res1,res2'
+'sync-return': 'res1,res2'
+'sync-return': 'err,res...'
+'sync-return': 'res...'
+```
+
+
+### function
+
+If matchers are not sufficient, you may use a function instead. This function will receive the same arguments
+as the callback, and its return will be the final result returned.
+
+```coffeescript
+'sync-return': (err,res1,res2) -> res1 + res2
+```
+
 ### default
 
 If not specified, this options is defaulted to:
@@ -164,33 +190,6 @@ If not specified, this options is defaulted to:
 This means that MakeSync expect the function to pass an error, and one result to the callback. 
 It will ignore everything else.
 
-
-### matchers
-
-An argument matcher can be passed like the following: 
-
-```coffeescript
-'sync-return': 'err,res'
-'sync-return': 'res'
-'sync-return': 'err,res1,res2'
-'sync-return': 'res1,res2'
-'sync-return': 'err,res...'
-'sync-return': 'res...'
-```
-
-It works like the coffeescript arguments with splats. MakeSync will match the arguments passed
-to the callback using this pattern. If err is defined it will throw it, otherwise res will be
-returned. (When using splats on res, res becomes an array)
-
-
-### function
-
-If matchers are not sufficient, you may use a function instead. This function will receive the same arguments
-as the callback, and its return will be the final result returned.
-
-```coffeescript
-'sync-return': (err,res1,res2) -> res1 + res2
-```
 
 ## options when calling on objects
 
