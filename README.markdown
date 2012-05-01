@@ -161,12 +161,37 @@ to the callback using this pattern. If err is defined it will throw it, otherwis
 returned. (When using splats on res, res becomes an array)
 
 ```coffeescript
-'sync-return': 'err,res'
-'sync-return': 'res'
-'sync-return': 'err,res1,res2'
-'sync-return': 'res1,res2'
-'sync-return': 'err,res...'
-'sync-return': 'res...'
+{Sync, MakeSync} = require 'make-sync'
+
+# err + res 
+f = (done) -> done null, 'A'
+syncF = MakeSync f, 'sync-return': 'err,res'
+Sync ->
+  console.log syncF()
+
+# single res 
+f = (done) -> done 'B'
+syncF = MakeSync f, 'sync-return': 'res'
+Sync ->
+  console.log syncF()
+
+# return error + res array 
+f = (done) -> done null, 'C1', 'C2' 
+syncF = MakeSync f, 'sync-return': 'err, res...'
+Sync ->
+  console.log syncF()
+ 
+# res array 
+f = (done) -> done 'D1', 'D2' 
+syncF = MakeSync f, 'sync-return': 'res...'
+Sync ->
+  console.log syncF()
+
+# the second result only
+f = (done) -> done 'E1', 'E2' , 'E3'
+syncF = MakeSync f, 'sync-return': 'ignoreFirst, res, ignoreLast...'
+Sync ->
+  console.log syncF()
 ```
 
 
@@ -176,7 +201,14 @@ If matchers are not sufficient, you may use a function instead. This function wi
 as the callback, and its return will be the final result returned.
 
 ```coffeescript
-'sync-return': (err,res1,res2) -> res1 + res2
+{Sync, MakeSync} = require 'make-sync'
+
+f = (done) -> done null, 10, 20
+options = 
+  'sync-return': (err,res1,res2) -> res1 + res2
+syncF = MakeSync f, options 
+Sync ->
+  console.log syncF()
 ```
 
 ### default
