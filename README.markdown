@@ -154,7 +154,7 @@ using 'Fiber.current', and uses the sync or async mode accordingly.
 This can be configured using the sync-return option. 
 
 
-### Argument matcher
+### argument matcher
 
 Argument matchers works like the coffeescript arguments with splats. MakeSync will match the arguments passed
 to the callback using this pattern. If err is defined it will throw it, otherwise res will be
