@@ -11,9 +11,9 @@
     "test": "cake test"
   }
   , "dependencies": {
-    "coffee-script" : "latest"
-    , "fibers": "latest"
+    "fibers": "latest"
     , "underscore": "latest"
+    , "coffee-script" : "latest"    
   }
   , "devDependencies" : {    
     "sv-cake-utils" : "latest"
