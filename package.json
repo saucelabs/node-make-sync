@@ -17,7 +17,6 @@
   }
   , "devDependencies" : {    
     "sv-cake-utils" : "latest"
-    , "mocha" : "latest"
     , "should": "latest"
   }
 }
