@@ -89,9 +89,7 @@ class Options
         resultBuilder = (rawRes...) -> 
           [err,res] = []
           [#{res}] = rawRes
-          if err?
-            throw err if err instanceof Error
-            throw new Error err
+          throw err if err? 
           return res    
         """      
       # building matcher function             

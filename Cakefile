@@ -1,7 +1,7 @@
 DEV_DIRS = ['lib','test']
 COFFEE_PATHS = DEV_DIRS.concat ['index.coffee']
 JS_PATHS = DEV_DIRS.concat ['index.js']
-TEST_ENV = ['test/sync-test.coffee']
+TEST_ENV = ['test/testing-env.coffee']
 
 u = require 'sv-cake-utils'
 

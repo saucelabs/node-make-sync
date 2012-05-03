@@ -11,7 +11,7 @@
       return it("should throw Shit", function(done) {
         var f, syncF;
         f = function(done) {
-          return done("Shit happens!");
+          return done(new Error("Shit happens!"));
         };
         syncF = MakeSync(f);
         return Sync(function() {
@@ -60,7 +60,7 @@
       return it("should throw Shit", function(done) {
         var f, syncF;
         f = function(done) {
-          return done("Shit happens!");
+          return done(new Error("Shit happens!"));
         };
         syncF = MakeSync(f, {
           'sync-return': 'err, res'

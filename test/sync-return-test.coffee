@@ -1,11 +1,12 @@
 should = require 'should'
 {Sync, MakeSync} = require('../lib/make-sync')
-  
+
+
 describe "sync", ->
 
   describe "default", ->
     it "should throw Shit", (done) ->
-      f = (done) -> done "Shit happens!"
+      f = (done) -> done new Error "Shit happens!"
       syncF = MakeSync f
       Sync ->
         (-> syncF()).should.throw(/Shit/) 
@@ -32,7 +33,7 @@ describe "sync", ->
 
   describe "throw error", ->
     it "should throw Shit", (done) ->
-      f = (done) -> done "Shit happens!"
+      f = (done) -> done new Error "Shit happens!"
       syncF = MakeSync f, {'sync-return': 'err, res'}
       Sync ->
         (-> syncF()).should.throw(/Shit/) 

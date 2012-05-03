@@ -133,7 +133,7 @@
         (options.syncReturn()(null, 1)).should.equal(1);
         (options.syncReturn()(null, 1, 3)).should.equal(1);
         (function() {
-          return options.syncReturn()('Shit!');
+          return options.syncReturn()(new Error('Shit!'));
         }).should["throw"](/Shit/);
         return done();
       });
@@ -146,7 +146,7 @@
         (options.syncReturn()(null, 1)).should.eql([1]);
         (options.syncReturn()(null, 1, 3)).should.eql([1, 3]);
         (function() {
-          return options.syncReturn()('Shit!');
+          return options.syncReturn()(new Error('Shit!'));
         }).should["throw"](/Shit/);
         return done();
       });
@@ -166,7 +166,7 @@
         options = new Options({
           'sync-return': function(err, res1, res2) {
             if (err) {
-              throw new Error('Merde!');
+              throw new Error(new Error('Merde!'));
             }
             return res1 + res2;
           }
@@ -174,7 +174,7 @@
         options.syncReturn().should.be.a('function');
         (options.syncReturn()(null, 1, 3)).should.equal(4);
         (function() {
-          return options.syncReturn()('Shit!');
+          return options.syncReturn()(new Error('Shit!'));
         }).should["throw"](/Merde/);
         return done();
       });

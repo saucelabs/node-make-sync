@@ -117,8 +117,9 @@ describe "options", ->
       options.syncReturn().should.be.a 'function'    
       (options.syncReturn() null,1).should.equal 1
       (options.syncReturn() null,1,3).should.equal 1
-      (-> options.syncReturn() 'Shit!').should.throw /Shit/
+      (-> options.syncReturn() new Error 'Shit!').should.throw /Shit/
       done()
+    
     it "pattern with error", (done) ->
       options = new Options \
       { 
@@ -127,7 +128,7 @@ describe "options", ->
       options.syncReturn().should.be.a 'function'    
       (options.syncReturn() null,1).should.eql [1]
       (options.syncReturn() null,1,3).should.eql [1,3]
-      (-> options.syncReturn() 'Shit!').should.throw /Shit/
+      (-> options.syncReturn() new Error 'Shit!').should.throw /Shit/
       done()
 
     it "pattern without error", (done) ->
@@ -145,12 +146,12 @@ describe "options", ->
       options = new Options \
       { 
         'sync-return': (err,res1,res2) ->
-          throw new Error 'Merde!' if err
+          throw new Error new Error 'Merde!' if err
           res1+res2
       }        
       options.syncReturn().should.be.a 'function'    
       (options.syncReturn() null,1,3).should.equal 4
-      (-> options.syncReturn() 'Shit!').should.throw /Merde/
+      (-> options.syncReturn() new Error 'Shit!').should.throw /Merde/
       done()
 
     it "object global config with function", (done) ->
