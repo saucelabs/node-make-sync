@@ -84,7 +84,7 @@ f = MakeSync f, mode:'async'
 ```
 
 This mode assumes that the function is always called in asynchronous mode, 
-so doesn't change the function behaviour. (probably not useful in most case)  
+so doesn't change the function behavior. (probably not useful in most case)  
 
 
 ### mixed-args (default mixed)
@@ -104,7 +104,7 @@ to the section below.
 
 #### fixed numbers of args /  function arguments
 
-This only applies when using the mixed-args mode and calling the function sychronously.
+This only applies when using the mixed-args mode and calling the function synchronously.
 
 There are 2 strategies to resolve the confusion between the 'done' callback and other
 function argument, when those are passed at the end of the argument list:
