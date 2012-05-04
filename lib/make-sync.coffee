@@ -7,8 +7,9 @@
 require('fibers');        
 Future = require 'fibers/future'
 wait = Future.wait
-{Options} = require '../lib/options'
+{Options} = require './options'
 
+# use a Future to make the sync call and wait.
 callSync = (f, resultBuilderFunc, args...) ->   
   # making sure the returns follow the
   # usual callback rule
