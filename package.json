@@ -1,6 +1,6 @@
 {
     "name": "make-sync"
-  , "version": "0.1.1"
+  , "version": "0.1.2"
   , "description": "synchronize functions and objects using fibers"
   , "keywords": ["fibers", "sync", "synchronous"]
   , "author": "Seb Vincent <seb.vincent@gmail.com>"
