@@ -1,6 +1,6 @@
 {
     "name": "make-sync"
-  , "version": "0.1.0"
+  , "version": "0.1.1"
   , "description": "synchronize functions and objects using fibers"
   , "keywords": ["fibers", "sync", "synchronous"]
   , "author": "Seb Vincent <seb.vincent@gmail.com>"
@@ -12,12 +12,12 @@
   }
   , "dependencies": {
     "fibers": "0.6.x"
-    , "underscore": "1.3.x"
+    , "underscore": "1.4.x"
     , "coffee-script" : "1.3.x"    
   }
   , "devDependencies" : {    
     "sv-cake-utils" : "0.1.x"
-    , "mocha": "1.4.x"
-    , "should": "1.1.x"
+    , "mocha": "1.6.x"
+    , "should": "1.2.x"
   }
 }
