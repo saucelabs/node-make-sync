@@ -1,4 +1,4 @@
-# make-sync
+# make-sync [![Build Status](https://secure.travis-ci.org/sebv/node-make-sync.png?branch=master)](http://travis-ci.org/sebv/node-make-sync)
 
 
 This module uses  [node-fibers](http://github.com/laverdet/node-fibers) to transform asynchronous functions into 
