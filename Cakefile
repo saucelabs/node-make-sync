@@ -17,9 +17,10 @@ task 'clean', 'Remove all js files', ->
 
 task 'test', 'Run All tests', ->
   u.coffee.compile TEST_ENV
-  u.mocha.test 'test'
+  u.mocha.test 'test', (status) ->
+    process.exit status 
 
 task 'grep:dirty', 'Lookup for debugger and console.log in code', ->
   u.grep.debug()
   u.grep.log()
-      
+
