@@ -4,7 +4,7 @@
 # MIT Licensed
 ###
 
-require('fibers');        
+Fiber = require('fibers');        
 Future = require 'fibers/future'
 wait = Future.wait
 {Options} = require './options'
