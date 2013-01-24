@@ -85,12 +85,17 @@ sync = (f) ->
     do f
   .run()
 
+current = ->
+  Fiber.current
+
 exports.Sync = sync
 exports.MakeSync = makeSync  
 exports.MakeObjSync = makeObjSync
 exports.MakeFuncSync = makeFuncSync
+exports.Current = current
 
 exports.sync = sync
 exports.makeSync = makeSync  
 exports.makeObjSync = makeObjSync
 exports.makeFuncSync = makeFuncSync
+exports.current = current
