@@ -81,9 +81,8 @@ makeSync = (target, _options) ->
 
 # open a sync block
 sync = (f) ->
-  Fiber ->  
-    do f
-  .run()
+  fn = Fiber f
+  fn.run()
 
 current = ->
   Fiber.current
