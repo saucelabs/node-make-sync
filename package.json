@@ -13,9 +13,9 @@
   , "dependencies": {
     "fibers": "1.0.x"
     , "underscore": "1.4.x"
-    , "coffee-script" : "1.4.x"    
+    , "coffee-script" : "1.6.x"
   }
-  , "devDependencies" : {    
+  , "devDependencies" : {
     "sv-cake-utils" : "latest"
     , "mocha": "latest"
     , "should": "latest"
