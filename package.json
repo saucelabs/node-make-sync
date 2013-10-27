@@ -1,23 +1,30 @@
 {
-    "name": "make-sync"
-  , "version": "0.1.4"
-  , "description": "synchronize functions and objects using fibers"
-  , "keywords": ["fibers", "sync", "synchronous"]
-  , "author": "Seb Vincent <seb.vincent@gmail.com>"
-  , "repository": { "type": "git", "url": "git@github.com:sebv/node-make-sync.git" }
-  , "main": "./index"
-  , "engine": "node >= 0.6.1"
-  , "scripts": {
+  "name": "make-sync",
+  "version": "0.1.4",
+  "description": "synchronize functions and objects using fibers",
+  "keywords": [
+    "fibers",
+    "sync",
+    "synchronous"
+  ],
+  "author": "Seb Vincent <seb.vincent@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sebv/node-make-sync.git"
+  },
+  "main": "./index",
+  "engine": "node >= 0.6.1",
+  "scripts": {
     "test": "cake test"
-  }
-  , "dependencies": {
-    "fibers": "1.0.x"
-    , "underscore": "1.4.x"
-    , "coffee-script" : "1.6.x"
-  }
-  , "devDependencies" : {
-    "sv-cake-utils" : "latest"
-    , "mocha": "latest"
-    , "should": "latest"
+  },
+  "dependencies": {
+    "underscore": "~1.5.2",
+    "coffee-script": "~1.6.3",
+    "fibers": "~1.0.1"
+  },
+  "devDependencies": {
+    "sv-cake-utils": "~0.1.8",
+    "should": "~2.0.2",
+    "mocha": "~1.13.0"
   }
 }
