@@ -18,9 +18,9 @@
     "test": "cake test"
   },
   "dependencies": {
-    "underscore": "~1.5.2",
     "coffee-script": "~1.6.3",
-    "fibers": "~1.0.1"
+    "fibers": "~1.0.1",
+    "lodash": "~2.2.1"
   },
   "devDependencies": {
     "sv-cake-utils": "~0.1.8",

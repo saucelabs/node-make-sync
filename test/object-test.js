@@ -9,7 +9,7 @@
 
   _ref1 = require('./helpers/function-gen'), makeTestFunc = _ref1.makeTestFunc, extraFunc = _ref1.extraFunc, MAX_PARAM = _ref1.MAX_PARAM, RES_WITHOUT_EXTRA_FUNC = _ref1.RES_WITHOUT_EXTRA_FUNC, RES_WITH_EXTRA_FUNC = _ref1.RES_WITH_EXTRA_FUNC;
 
-  _ = require('underscore');
+  _ = require('lodash');
 
   fiberError = /without a fiber/;
 
