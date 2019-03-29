@@ -1,6 +1,6 @@
 {
   "name": "make-sync",
-  "version": "0.1.5",
+  "version": "0.3.0",
   "description": "synchronize functions and objects using fibers",
   "keywords": [
     "fibers",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "coffee-script": "~1.6.3",
-    "fibers": "~1.0.1",
+    "fibers": "^3.0.0",
     "lodash": "~2.2.1"
   },
   "devDependencies": {
